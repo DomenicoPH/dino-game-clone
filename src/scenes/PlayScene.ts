@@ -7,13 +7,23 @@ class PlayScene extends Phaser.Scene{
 
     constructor(){
         super('PlayScene');
-    }
+    };
 
     create(){
-        this.add
-            .tileSprite(0, this.gameHeight, this.gameWidth, 26, 'ground')
-            .setOrigin(0, 1)
+        this.createEnvironment();
+        this.createPlayer();
+    };
+
+    createPlayer(){
+        this.physics.add.sprite(0, this.gameHeight, 'dino-idle')
+        .setOrigin(0, 1)
     }
+
+    createEnvironment(){
+        this.add
+            .tileSprite(0, this.gameHeight, 88, 26, 'ground')
+            .setOrigin(0, 1)
+    };
 
 };
 
