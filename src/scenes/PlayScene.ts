@@ -19,12 +19,15 @@ class PlayScene extends Phaser.Scene{
         this.createPlayer();
         this.startTrigger = this.physics.add.sprite(0, 10, null).setOrigin(0, 1).setAlpha(0);
         this.physics.add.overlap(this.startTrigger, this.player, () => {
-            console.log('colision!')
+           if(this.startTrigger.y === 10){
+            this.startTrigger.body.reset(0, this.gameHeight);
+            return;
+           };
+           this.startTrigger.body.reset(9999, 9999);
         })
     };
 
     createPlayer(){
-
         this.player = new Player(this, 0, this.gameHeight, 'dino-idle');
     }
 
