@@ -4,6 +4,7 @@ import { SpriteWithDynamicBody } from "../types";
 class PlayScene extends Phaser.Scene{
 
     player: SpriteWithDynamicBody;
+    startTrigger: any;
 
     get gameHeight(){ return this.game.config.height as number };
     get gameWidth(){ return this.game.config.width as number };
@@ -15,11 +16,15 @@ class PlayScene extends Phaser.Scene{
     create(){
         this.createEnvironment();
         this.createPlayer();
+        this.startTrigger = this.physics.add.sprite(0, 10, null).setOrigin(0, 1).setAlpha(0);
         this.registerPlayerControl();
+        this.physics.add.overlap(this.startTrigger, this.player, () => {
+            console.log('colision!')
+        })
     };
 
     createPlayer(){
-        this.player = this.physics.add.sprite(0, this.gameHeight, 'dino-idle').setOrigin(0, 1)
+        this.player = this.physics.add.sprite(0, this.gameHeight, 'dino-idle').setOrigin(0, 1);
         this.player
             .setGravityY(5000)
             .setCollideWorldBounds(true)
