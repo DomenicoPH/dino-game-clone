@@ -3,6 +3,10 @@ import PreloadScene from "./scenes/PreloadScene";
 import PlayScene from "./scenes/PlayScene";
 import { GameScene } from "./scenes/GameScene";
 
+export const PRELOAD_CONFIG = {
+  cactusesCount: 6,
+}
+
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 1000,
