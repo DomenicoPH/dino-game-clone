@@ -46,7 +46,7 @@ class PlayScene extends GameScene{
     }
 
     createPlayer(){
-        this.player = new Player(this, 0, this.gameHeight, 'dino-idle');
+        this.player = new Player(this, 0, this.gameHeight, 'dino-run');
     }
 
     createEnvironment(){
