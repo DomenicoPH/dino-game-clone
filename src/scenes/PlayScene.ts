@@ -13,6 +13,7 @@ class PlayScene extends GameScene{
     startTrigger: SpriteWithDynamicBody;
     spawnInterval: number = 1500;
     spawnTime: number = 0;
+    obstacleSpeed: number = 10;
 
     constructor(){
         super('PlayScene');
@@ -48,11 +49,13 @@ class PlayScene extends GameScene{
     };
 
     update(time: number, delta: number): void {
+        if(!this.isGameRunning) return;
         this.spawnTime += delta;
         if(this.spawnTime > this.spawnInterval){
             this.spawnObstacle();
             this.spawnTime = 0;
         }
+        Phaser.Actions.IncX(this.obstacles.getChildren() as Phaser.GameObjects.Sprite[], -this.obstacleSpeed);
     };
 
     // --Custom methods--
