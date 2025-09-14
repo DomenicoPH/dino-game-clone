@@ -7,7 +7,11 @@ class PlayScene extends GameScene{
 
     player: Player;
     ground: Phaser.GameObjects.TileSprite;
+    obstacles: Phaser.Physics.Arcade.Group;
+
     startTrigger: SpriteWithDynamicBody;
+    spawnInterval: number = 1500;
+    spawnTime: number = 0;
 
     constructor(){
         super('PlayScene');
@@ -16,6 +20,7 @@ class PlayScene extends GameScene{
     create(){
         this.createEnvironment();
         this.createPlayer();
+        this.obstacles = this.physics.add.group();
         this.startTrigger = this.physics.add.sprite(0, 10, null).setOrigin(0, 1).setAlpha(0);
         this.physics.add.overlap(this.startTrigger, this.player, () => {
             if(this.startTrigger.y === 10){
@@ -42,17 +47,31 @@ class PlayScene extends GameScene{
     };
 
     update(time: number, delta: number): void {
+        this.spawnTime += delta;
+        if(this.spawnTime > this.spawnInterval){
+            this.spawnObstacle();
+            this.spawnTime = 0;
+        }
+    };
 
-    }
+    // --Custom methods--
 
     createPlayer(){
         this.player = new Player(this, 0, this.gameHeight, 'dino-run');
-    }
+    };
 
     createEnvironment(){
         this.ground = this.add.tileSprite(0, this.gameHeight, 88, 26, 'ground').setOrigin(0, 1)
     };
 
+    spawnObstacle(){
+        const obstacleNumber = Math.floor(Math.random() * 6) + 1;
+        const distance = Phaser.Math.Between(600, 900);
+        this.obstacles
+            .create(distance, this.gameHeight, `obstacle-${obstacleNumber}`)
+            .setOrigin(0, 1);
+    };
+    
 };
 
 export default PlayScene;
