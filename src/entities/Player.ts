@@ -44,6 +44,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     playRunAnimation(){
         this.play('dino-run', true);
     }
+
     registerAnimations(){
         this.anims.create({
             key: 'dino-run',
@@ -51,5 +52,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             frameRate: 10,
             repeat: -1,
         })
+    }
+
+    die(){
+        this.anims.pause();
+        this.setTexture('dino-hurt');
     }
 }
