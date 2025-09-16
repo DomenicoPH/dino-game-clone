@@ -19,6 +19,10 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: true
     }
   },
+  fps: {
+    target: 120,
+    forceSetTimeOut: true,
+  },
   scene: [PreloadScene, GameScene, PlayScene]
 };
 
