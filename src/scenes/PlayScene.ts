@@ -122,7 +122,12 @@ class PlayScene extends GameScene{
 
     handleGameRestart(){
         this.restartText.on('pointerdown', () => {
-            console.log('restart')
+            this.physics.resume();
+            this.player.setVelocityY(0);
+            this.obstacles.clear(true, true);
+            this.gameOverContainer.setAlpha(0);
+            this.anims.resumeAll();
+            this.isGameRunning = true;
         })
     };
     
