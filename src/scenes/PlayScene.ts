@@ -59,6 +59,10 @@ class PlayScene extends GameScene{
         if(this.scoreDeltaTime > this.scoreInterval){
             this.score++;
             this.scoreDeltaTime = 0;
+            //Increase game speed every 100 points
+            if(this.score % 100 === 0){
+                this.gameSpeedModifier += 0.1;
+            }
         }
 
         Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed * this.gameSpeedModifier); //move obstacles to left side
@@ -194,9 +198,9 @@ class PlayScene extends GameScene{
             this.player.die();
             this.gameOverContainer.setAlpha(1);
             this.spawnTime = 0;
-            this.gameSpeed = 5;
             this.scoreDeltaTime = 0;
             this.score = 0;
+            this.gameSpeedModifier = 1;
         })
     };
 
