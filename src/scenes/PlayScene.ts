@@ -25,6 +25,7 @@ class PlayScene extends GameScene{
     spawnInterval: number = 1500;
     spawnTime: number = 0;
     gameSpeed: number = 5;
+    gameSpeedModifier: number = 1;
 
     constructor(){
         super('PlayScene');
@@ -46,21 +47,22 @@ class PlayScene extends GameScene{
     update(time: number, delta: number): void {
         if(!this.isGameRunning) return;
 
+        //Spawn obstacle control
         this.spawnTime += delta;
         if(this.spawnTime > this.spawnInterval){
             this.spawnObstacle();
             this.spawnTime = 0;
         };
 
+        //Increase score value
         this.scoreDeltaTime += delta;
         if(this.scoreDeltaTime > this.scoreInterval){
             this.score++;
-            console.log(this.score);
             this.scoreDeltaTime = 0;
         }
 
-        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
-        Phaser.Actions.IncX(this.clouds.getChildren(), -0.5);
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed * this.gameSpeedModifier); //move obstacles to left side
+        Phaser.Actions.IncX(this.clouds.getChildren(), -0.5); //move clouds to left side
 
         //Increase score text
         const score = Array.from(String(this.score), Number);
@@ -82,7 +84,7 @@ class PlayScene extends GameScene{
             }
         });
 
-        this.ground.tilePositionX += this.gameSpeed;
+        this.ground.tilePositionX += (this.gameSpeed * this.gameSpeedModifier);
     };
 
     // --Custom methods--
