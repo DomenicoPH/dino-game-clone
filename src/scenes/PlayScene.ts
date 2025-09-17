@@ -29,6 +29,7 @@ class PlayScene extends GameScene{
         this.createPlayer();
         this.createObstacles();
         this.createGameoverContainer();
+        this.createAnimations();
 
         this.handleGameStart();
         this.handleObstacleCollisions();
@@ -74,18 +75,30 @@ class PlayScene extends GameScene{
             .setAlpha(0);
     };
 
+    createAnimations(){
+        this.anims.create({
+            key: 'enemy-bird-fly',
+            frames: this.anims.generateFrameNumbers('enemy-bird'),
+            frameRate: 6,
+            repeat: -1,
+        })
+    }
+
     spawnObstacle(){
         const obstaclesCount = PRELOAD_CONFIG.cactusesCount + PRELOAD_CONFIG.birdsCount
         const obstacleNumber = Math.floor(Math.random() * obstaclesCount) + 1;
-        const distance = Phaser.Math.Between(600, 900);
+        // const obstacleNumber = 7; // for testing bird obstacle...
+        const distance = Phaser.Math.Between(150, 300);
         let obstacle;
 
         if(obstacleNumber > PRELOAD_CONFIG.cactusesCount){
             const enemyPossibleHeight = [20, 70];
             const enemyHeight = enemyPossibleHeight[Math.floor(Math.random() * 2)];
-            obstacle = this.obstacles.create(distance, (this.gameHeight - enemyHeight), `enemy-bird`)
+            obstacle = this.obstacles.create((this.gameWidth + distance), (this.gameHeight - enemyHeight), `enemy-bird`)
+                .setBodySize(80, 40)
+            obstacle.play('enemy-bird-fly', true);
         } else {
-            obstacle = this.obstacles.create(distance, this.gameHeight, `obstacle-${obstacleNumber}`)
+            obstacle = this.obstacles.create((this.gameWidth + distance), this.gameHeight, `obstacle-${obstacleNumber}`)
         }
         
         obstacle.setOrigin(0, 1).setImmovable(true)
@@ -121,6 +134,7 @@ class PlayScene extends GameScene{
         this.physics.add.collider(this.obstacles, this.player, () => {
             this.isGameRunning = false;
             this.physics.pause();
+            this.anims.pauseAll();
             this.player.die();
             this.gameOverContainer.setAlpha(1);
             this.spawnTime = 0;
