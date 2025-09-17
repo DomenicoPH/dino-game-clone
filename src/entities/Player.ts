@@ -58,6 +58,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playRunAnimation(){
+        this.body.height <= 58 ?
+        this.play('dino-down', true) :
         this.play('dino-run', true);
     }
 
