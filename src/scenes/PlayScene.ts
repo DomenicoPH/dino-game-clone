@@ -9,6 +9,7 @@ class PlayScene extends GameScene{
     player: Player;
     ground: Phaser.GameObjects.TileSprite;
     obstacles: Phaser.Physics.Arcade.Group;
+    clouds: Phaser.GameObjects.Group;
 
     startTrigger: SpriteWithDynamicBody;
 
@@ -43,12 +44,22 @@ class PlayScene extends GameScene{
             this.spawnObstacle();
             this.spawnTime = 0;
         }
-        Phaser.Actions.IncX(this.obstacles.getChildren() as Phaser.GameObjects.Sprite[], -this.gameSpeed);
+
+        Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
+        Phaser.Actions.IncX(this.clouds.getChildren(), -0.5);
+
         this.obstacles.getChildren().forEach( (obstacles: SpriteWithDynamicBody) => {
             if(obstacles.getBounds().right < 0){
                 this.obstacles.remove(obstacles);
             }
-        })
+        });
+
+        this.clouds.getChildren().forEach( (cloud: SpriteWithDynamicBody) => {
+            if(cloud.getBounds().right < 0){
+                cloud.x = this.gameWidth + Phaser.Math.Between(10, 30);
+            }
+        });
+
         this.ground.tilePositionX += this.gameSpeed;
     };
 
@@ -60,6 +71,14 @@ class PlayScene extends GameScene{
 
     createEnvironment(){
         this.ground = this.add.tileSprite(0, this.gameHeight, 88, 26, 'ground').setOrigin(0, 1)
+
+        this.clouds = this.add.group();
+        this.clouds = this.clouds.addMultiple([
+            this.add.image(this.gameWidth / 2, 170, 'cloud'),
+            this.add.image(this.gameWidth - 80, 80, 'cloud'),
+            this.add.image(this.gameWidth / 1.3, 100, 'cloud'),
+        ]);
+        this.clouds.setAlpha(0);
     };
 
     createObstacles(){
@@ -123,6 +142,7 @@ class PlayScene extends GameScene{
                         rollOutEvent.remove();
                         this.ground.width = this.gameWidth;
                         this.player.setVelocityX(0);
+                        this.clouds.setAlpha(1);
                         this.isGameRunning = true;
                     }
                 },
