@@ -24,7 +24,7 @@ class PlayScene extends GameScene{
 
     spawnInterval: number = 1500;
     spawnTime: number = 0;
-    gameSpeed: number = 5;
+    gameSpeed: number = 10;
     gameSpeedModifier: number = 1;
 
     constructor(){
