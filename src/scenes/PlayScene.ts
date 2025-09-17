@@ -62,6 +62,14 @@ class PlayScene extends GameScene{
         Phaser.Actions.IncX(this.obstacles.getChildren(), -this.gameSpeed);
         Phaser.Actions.IncX(this.clouds.getChildren(), -0.5);
 
+        //Increase score text
+        const score = Array.from(String(this.score), Number);
+        for(let i = 0; i < 5 - String(this.score).length; i++){
+            score.unshift(0);
+        }
+        this.scoreText.setText(score.join(''));
+
+        //Remove obstacles that are out of the screen
         this.obstacles.getChildren().forEach( (obstacles: SpriteWithDynamicBody) => {
             if(obstacles.getBounds().right < 0){
                 this.obstacles.remove(obstacles);
@@ -122,7 +130,7 @@ class PlayScene extends GameScene{
             fontSize: '20px',
             fontFamily: 'Arial',
             color: '535353',
-            resolution: 5,
+            resolution: 4,
         })
         .setOrigin(1, 0)
         .setAlpha(0)
