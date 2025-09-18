@@ -2,15 +2,60 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="icon" href="./assets/dinoico.png" type="image/png">
     <style>
       body {
-        padding: 200px;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        background: #f0f0f0;
+        height: 70vh;
+      }
+      .info{
+        display: flex;
+        justify-content: space-between;
+        width: 1000px;
+        border-top: 1px solid gray;
+        margin-top: 25px;
+      }
+      .info-text{
+        font-family: 'Courier New', Courier, monospace;
+        font-size: medium;
+      }
+      a{
+        text-decoration: none;
+        color: gray;
+      }
+
+      .instructions{
+        display: flex;
+        justify-content: space-evenly;
+        border: 1px solid gray;
+        padding: 10px;
+        width: 1000px;
+      }
+      strong{
+        border: 1px solid gray;
+        padding: 2px 12px;
       }
       canvas {
-        border: 2px solid gray;
+        /* border: 2px solid gray; */
       }
     </style>
   </head>
   <body>
+
+    <div class="instructions">
+      <h3 class="info-text">Instructions:</h3>
+      <h3 class="info-text">Press <strong>SPACE</strong> to jump</h3>
+      <h3 class="info-text">Press <strong>▼</strong> to duck</h3>
+    </div>
+    
+    <div class="info">
+      <h3 class="info-text">Chrome-Dino-Game Clone</h3>
+      <h3 class="info-text">Coded by <a href="https://github.com/DomenicoPH/dino-game-clone" target="_blank" rel="noopener noreferrer">Gnomono</a></h3>
+    </div>
+
   </body>
 </html>
