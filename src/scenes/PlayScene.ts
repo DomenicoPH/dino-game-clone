@@ -13,6 +13,7 @@ class PlayScene extends GameScene{
 
     startTrigger: SpriteWithDynamicBody;
 
+    highScoreText: Phaser.GameObjects.Text;
     scoreText: Phaser.GameObjects.Text;
     gameOverText: Phaser.GameObjects.Image;
     restartText: Phaser.GameObjects.Image;
@@ -137,9 +138,14 @@ class PlayScene extends GameScene{
             fontFamily: 'Arial',
             color: '535353',
             resolution: 4,
-        })
-        .setOrigin(1, 0)
-        .setAlpha(0)
+        }).setOrigin(1, 0).setAlpha(0);
+
+        this.highScoreText = this.add.text(10, 10, '00000', {
+            fontSize: '20px',
+            fontFamily: 'Arial',
+            color: '535353',
+            resolution: 4,
+        }).setOrigin(0, 0).setAlpha(0);
     }
 
     spawnObstacle(){
