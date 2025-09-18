@@ -140,12 +140,12 @@ class PlayScene extends GameScene{
             resolution: 4,
         }).setOrigin(1, 0).setAlpha(0);
 
-        this.highScoreText = this.add.text(10, 10, '00000', {
+        this.highScoreText = this.add.text(this.scoreText.getBounds().left - 10 , 10, '00000', {
             fontSize: '20px',
             fontFamily: 'Arial',
             color: '535353',
             resolution: 4,
-        }).setOrigin(0, 0).setAlpha(0);
+        }).setOrigin(1, 0).setAlpha(0);
     }
 
     spawnObstacle(){
@@ -203,6 +203,12 @@ class PlayScene extends GameScene{
             this.anims.pauseAll();
             this.player.die();
             this.gameOverContainer.setAlpha(1);
+
+            const newHighScore = this.highScoreText.text.substring(this.highScoreText.text.length - 5);
+            const newScore = Number(this.scoreText.text) > Number(newHighScore) ? this.scoreText.text : newHighScore;
+            this.highScoreText.setText('HI ' + newScore);
+            this.highScoreText.setAlpha(1);
+
             this.spawnTime = 0;
             this.scoreDeltaTime = 0;
             this.score = 0;
