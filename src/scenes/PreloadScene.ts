@@ -7,6 +7,7 @@ class PreloadScene extends Phaser.Scene{
     }
 
     preload(){
+        //image
         this.load.image('ground', 'assets/ground.png');
         this.load.image('cloud', 'assets/cloud.png');
 
@@ -24,6 +25,11 @@ class PreloadScene extends Phaser.Scene{
             const cactusNumber = i + 1;
             this.load.image(`obstacle-${cactusNumber}`, `assets/cactuses_${cactusNumber}.png`);
         }
+
+        //sound
+        this.load.audio('jump', 'assets/jump.m4a');
+        this.load.audio('hit', 'assets/hit.m4a');
+        this.load.audio('progress', 'assets/reach.m4a');
     }
 
     create(){

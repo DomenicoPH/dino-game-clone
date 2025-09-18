@@ -4,6 +4,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     scene: GameScene;
+    jumpSound: Phaser.Sound.HTML5AudioSound;
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key);
@@ -22,7 +23,10 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             .setBodySize(44, 92)
             .setOffset(20, 0)
             .setDepth(1);
+
             this.registerAnimations();
+
+            this.jumpSound = this.scene.sound.add('jump', { volume: 0.2 }) as Phaser.Sound.HTML5AudioSound;
     }
 
     update(){
@@ -34,13 +38,19 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
         const onFloor = (this.body as Phaser.Physics.Arcade.Body).onFloor();
 
+        //jump
         if(isSpaceJustDown && onFloor){
             this.setVelocityY(-1600);
+            this.jumpSound.play();
         }
+
+        //duck
         if(isDownJustDown && onFloor){
             this.body.setSize(this.body.width, 58);
             this.setOffset(60, 34)
         }
+        
+        //unduck
         if(isDownJustUp && onFloor){
             this.body.setSize(44, 92);
             this.setOffset(20, 0);
