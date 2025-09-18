@@ -5,6 +5,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     scene: GameScene;
     jumpSound: Phaser.Sound.HTML5AudioSound;
+    hitSound: Phaser.Sound.HTML5AudioSound;
 
     constructor(scene: GameScene, x: number, y: number, key: string){
         super(scene, x, y, key);
@@ -25,8 +26,8 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             .setDepth(1);
 
             this.registerAnimations();
-
-            this.jumpSound = this.scene.sound.add('jump', { volume: 0.2 }) as Phaser.Sound.HTML5AudioSound;
+            this.registerSounds();
+            
     }
 
     update(){
@@ -49,7 +50,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
             this.body.setSize(this.body.width, 58);
             this.setOffset(60, 34)
         }
-        
+
         //unduck
         if(isDownJustUp && onFloor){
             this.body.setSize(44, 92);
@@ -90,8 +91,14 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
         })
     }
 
+    registerSounds(){
+        this.jumpSound = this.scene.sound.add('jump', { volume: 0.5 }) as Phaser.Sound.HTML5AudioSound;
+        this.hitSound = this.scene.sound.add('hit', { volume: 0.5 }) as Phaser.Sound.HTML5AudioSound;
+    }
+
     die(){
         this.anims.pause();
         this.setTexture('dino-hurt');
+        this.hitSound.play();
     }
 }
