@@ -4,6 +4,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     scene: GameScene;
+    
     jumpSound: Phaser.Sound.HTML5AudioSound;
     hitSound: Phaser.Sound.HTML5AudioSound;
 
